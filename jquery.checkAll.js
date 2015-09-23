@@ -43,7 +43,7 @@
 
 			plugin.options = $.extend({}, plugin._defaults, options);
 
-			plugin.$checkboxes = $(plugin.options.selector);
+			plugin.$checkboxes = $(plugin.options.selector).not(plugin.$el);
 
 			plugin.$el.on("change.checkAll", function () {
 				plugin.$el.prop({indeterminate: false});
