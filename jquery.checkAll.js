@@ -49,7 +49,8 @@
 				plugin.$el.prop({indeterminate: false});
 				$(plugin.options.selector).prop({checked: plugin.el.checked});
 			});
-			plugin.$checkboxes.on("change.checkAll", function () {
+			
+			var checkboxChange = function(){
 				var totalChecked = 0;
 				var totalUnchecked = 0;
 				plugin.$checkboxes.each(function () {
@@ -66,11 +67,14 @@
 				} else {
 					plugin.$el.prop({indeterminate: true, checked: false});
 				}
-			});
+			};
+			plugin.$checkboxes.on("change.checkAll", checkboxChange);
 
 			// Add a reverse reference to the DOM object
 			plugin.$el.data(pluginName, plugin);
+			checkboxChange();
 		},
+		
 		destroy: function () {
 			var plugin = this;
 
