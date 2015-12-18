@@ -3,7 +3,7 @@
  * License: MIT http://www.opensource.org/licenses/mit-license.php
  * Description: jQuery plugin to create a "check/uncheck all" check box
  * Website: https://github.com/UziTech/jquery.checkAll.js
- * Version: 0.1.0
+ * Version: 0.1.1
  */
 
 ;
@@ -33,11 +33,14 @@
 				}
 
 				plugin.options = $.extend({}, plugin._defaults, options);
-
-				plugin.$checkboxes = $(plugin.options.selector).not(plugin.$el).not(":not(input[type='checkbox'])");
-				if (plugin.$checkboxes.length === 0) {
-					plugin.$checkboxes = $(plugin.options.selector).not(plugin.$el).find("input[type='checkbox']").not(plugin.$el);
+				var selection = plugin.options.selector;
+				if(typeof plugin.options.selector === "function"){
+					selection = plugin.options.selector.call(plugin.el);
 				}
+					plugin.$checkboxes = $(selection).not(plugin.$el).not(":not(input[type='checkbox'])");
+					if (plugin.$checkboxes.length === 0) {
+						plugin.$checkboxes = $(selection).not(plugin.$el).find("input[type='checkbox']").not(plugin.$el);
+					}
 
 				plugin.$el.on("change.checkAll", function () {
 					plugin.$el.prop({indeterminate: false});
